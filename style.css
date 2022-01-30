@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.wrapper {
+    font-family: "Roboto", sans-serif;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 336px;
+    margin: auto;
+}
+.wrapper .polosa__To__Do__list {
+    background: #FFDC40;
+    width: 100%;
+    height: 28px;
+    border-radius: 8px;
+}
+.wrapper .container__To__Do__list .title__To__Do__list {
+    font-style: normal;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 30px;
+    text-align: center;
+    text-transform: capitalize;
+    margin-top: 13px;
+    margin-bottom: 24px;
+}
+
+.wrapper .container__To__Do__list .image__container__To__Do__list {
+padding-left: 283.5px;
+}
+
+.wrapper .container__To__Do__list .button__To__Do__list {
+    border: 0;
+    border-radius: 71px;
+    padding: 0px;
+    margin-left: 92px;
+    margin-top: 18px;
+    margin-bottom: 19px;
+    cursor: pointer;
+  }
+
+  .wrapper .container__To__Do__list .form__To__Do__list .button__To__Do__list .img__button__To__Do__list {
+    width: 100%;
+    height: 100%;
+  }
+
+  .input__To__Do__list {
+      margin-left: 28px;
+      border: 1px solid #C4C4C4;
+      box-sizing: border-box;
+      border-radius: 10px;
+      height: 40px;
+      width: 286px;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 16px;
+  }
