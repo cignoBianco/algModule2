@@ -80,14 +80,44 @@ padding-left: 280px;
      cursor: pointer;
  }
 
+ .button__sort__To__Do__list__two {
+    background-image: url(/image/Group__90.png);
+    border: 0;
+    width: 26px;
+    height: 15px;
+    margin-bottom: 12px;
+}
+
+.button__sort__To__Do__list__two:hover {
+    background-image: url(/image/Group__91.png);
+    cursor: pointer;
+}
+
+
  .form__To__Do__list .list {
     width: 286px;
-    height: 200px;
+    max-height: 200px;
     margin: auto;
     margin-top: 10px;
     border: 1px solid #C4C4C4;
     box-sizing: border-box;
     border-radius: 10px;
+    overflow-y: auto;
     display: none;
  }
  
+ .list__content {
+     padding-left: 27px;
+     font-weight: 500;
+     font-size: 14px;
+     line-height: 16px;
+     padding-bottom: 23px;
+ }
+
+ .list__content:first-child {
+     padding-top: 12px;
+ }
+
+ .list__content:last-child {
+    padding-bottom: 12px;
+}
