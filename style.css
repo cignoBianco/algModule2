@@ -93,6 +93,22 @@ padding-left: 280px;
     cursor: pointer;
 }
 
+.del__button {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: #C4C4C4;
+    padding: 2.4px 4px 5px 4px;
+}
+
+.del__button:hover {
+    background: #833AE0;
+    color: white;
+    border: 1px solid #833AE0;
+    cursor: pointer;
+}
 
  .form__To__Do__list .list {
     width: 286px;
@@ -108,10 +124,13 @@ padding-left: 280px;
  
  .list__content {
      padding-left: 27px;
+     padding-right: 27px;
      font-weight: 500;
      font-size: 14px;
      line-height: 16px;
      padding-bottom: 23px;
+     display: flex;
+     justify-content: space-between;
  }
 
  .list__content:first-child {
