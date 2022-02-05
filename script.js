@@ -8,18 +8,23 @@ let arrayToDo = []; //массив листа
 
 buttonToDo.addEventListener('click', clickButtonToDo);
 buttonSort.addEventListener('click', clickButtonSort);
+window.addEventListener ("keypress", function (e) {
+    if (e.keyCode !== 13) return;
+
+    return console.log("enter!");
+});
 
 function clickButtonToDo(event){
     event.preventDefault();
-    if(document.querySelector('.input__To__Do__list').value == '') { // проверка на пустую строку
-        return ;
-    } else {
+    // if(document.querySelector('.input__To__Do__list').value == '') { // проверка на пустую строку
+    //     return ;
+    // } else {
         toDoList.style.display = 'block';
     arrayToDo.push(inputToDo.value); //добавляет значение инпута в массив
     console.log(inputToDo.value,document.querySelector('.input__To__Do__list').value)
     addTask(inputToDo.value);
     document.querySelector('.input__To__Do__list').value = ''; // чистит инпут для новой задачи
-    };
+    // };
 };
 
 function addTask(name) { // функция отвечает за добавление и стилизацию блока с поставленной задачей в блок .list
@@ -32,9 +37,66 @@ function addTask(name) { // функция отвечает за добавле�
     newElementDiv.innerText = name;
     buttonDelet.innerText = 'X';
     toDoList.append(newElementDiv);
-    buttonDelet.addEventListener('click', clickButtonDelet);
     newElementDiv.append(buttonDelet);
-    
+    buttonDelet.addEventListener('click', clickButtonDelet);
+
+    let taskElements = toDoList.querySelectorAll('.list__content');
+     
+    // Перебираем все элементы списка и присваиваем нужное значение
+    for (let task of taskElements) {
+      task.draggable = true;
+    }
+
+    toDoList.addEventListener(`dragstart`, (evt) => {
+        evt.target.classList.add(`selected`);
+      })
+      
+      toDoList.addEventListener(`dragend`, (evt) => {
+        evt.target.classList.remove(`selected`);
+      });
+
+      toDoList.addEventListener(`dragover`, (evt) => {
+        // Разрешаем сбрасывать элементы в эту область
+        evt.preventDefault();
+        
+        // Находим перемещаемый элемент
+        const activeElement = toDoList.querySelector(`.selected`);
+        // Находим элемент, над которым в данный момент находится курсор
+        const currentElement = evt.target;
+        // Проверяем, что событие сработало:
+        // 1. не на том элементе, который мы перемещаем,
+        // 2. именно на элементе списка
+        const isMoveable = activeElement !== currentElement &&
+          currentElement.classList.contains(`list__content`);
+      
+        // Если нет, прерываем выполнение функции
+        if (!isMoveable) {
+          return;
+        }
+      
+        // Находим элемент, перед которым будем вставлять
+        const nextElement = (currentElement === activeElement.nextElementSibling) ?
+            currentElement.nextElementSibling :
+            currentElement;
+      
+        // Вставляем activeElement перед nextElement
+        toDoList.insertBefore(activeElement, nextElement);
+      });
+
+      const getNextElement = (cursorPosition, currentElement) => {
+        // Получаем объект с размерами и координатами
+        const currentElementCoord = currentElement.getBoundingClientRect();
+        // Находим вертикальную координату центра текущего элемента
+        const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
+      
+        // Если курсор выше центра элемента, возвращаем текущий элемент
+        // В ином случае — следующий DOM-элемент
+        const nextElement = (cursorPosition < currentElementCenter) ?
+            currentElement :
+            currentElement.nextElementSibling;
+      
+        return nextElement;
+      };
     };
 
 function clickButtonSort() { //функция отвечает за запуск функции сортировки элементов при нажатии на кнопку buttonSort
@@ -64,9 +126,10 @@ for(var i = 0; i < sortInfo.length; i++) {
   buttonSort.classList = 'button__sort__To__Do__list';
 };
 
-function clickButtonDelet(event) {
+function clickButtonDelet(event) { 
     event.preventDefault();
     let elementDiv = document.querySelector('.list__content');
     elementDiv.remove();
+    console.log("удалил");
     toDoList.innerText == ''? toDoList.style.display = 'none':toDoList.style.display = 'block';
 };
