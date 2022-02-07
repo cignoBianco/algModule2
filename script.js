@@ -6,8 +6,15 @@ let toDoList = document.querySelector('.list');
 
 let arrayToDo = []; //массив листа
 
-buttonToDo.addEventListener('click', clickButtonToDo);// обработчик событий на кнопку добавить "+"
-buttonSort.addEventListener('click', clickButtonSort);// обработчик событий на кнопку сортировки 
+
+buttonToDo.addEventListener('click', (event) => clickButtonToDo(event));
+buttonSort.addEventListener('click', clickButtonSort);
+window.addEventListener ("keypress", function (e) {
+    if (e.key !== 13) return;
+
+    return console.log("enter!");
+});
+
 
 function clickButtonToDo(event){
     event.preventDefault();
