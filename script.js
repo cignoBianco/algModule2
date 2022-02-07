@@ -6,7 +6,7 @@ let toDoList = document.querySelector('.list');
 
 let arrayToDo = []; //массив листа
 
-buttonToDo.addEventListener('click', clickButtonToDo);
+buttonToDo.addEventListener('click', (event) => clickButtonToDo(event));
 buttonSort.addEventListener('click', clickButtonSort);
 window.addEventListener ("keypress", function (e) {
     if (e.keyCode !== 13) return;
