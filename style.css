@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+body {
+    background: black;
+}
+
 .wrapper {
     font-family: "Roboto", sans-serif; 	
 }
@@ -9,6 +13,7 @@
     border-radius: 10px;
     width: 336px;
     margin: auto;
+    background: white;
 }
 .wrapper .content .polosa__To__Do__list {
     background: #FFDC40;
@@ -141,7 +146,7 @@ padding-left: 280px;
  .list__content:last-child {
     padding-bottom: 12px;
 }
-
+/* ниже класс для drag and drop */
 .selected {
     opacity: 0.6;
   }

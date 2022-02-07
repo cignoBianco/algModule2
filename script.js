@@ -1,18 +1,13 @@
 let buttonToDo = document.querySelector('.button__To__Do__list');
 let inputToDo = document.querySelector('.input__To__Do__list');
-let buttonSort = document.querySelector('.button__sort__To__Do__list');
+let buttonSort = document.querySelector('.button__sort__To__Do__list');v 
 let formList = document.querySelector('.form__To__Do__list');
 let toDoList = document.querySelector('.list');
 
 let arrayToDo = []; //массив листа
 
-buttonToDo.addEventListener('click', clickButtonToDo);
-buttonSort.addEventListener('click', clickButtonSort);
-window.addEventListener ("keypress", function (e) {
-    if (e.keyCode !== 13) return;
-
-    return console.log("enter!");
-});
+buttonToDo.addEventListener('click', clickButtonToDo);// обработчик событий на кнопку добавить "+"
+buttonSort.addEventListener('click', clickButtonSort);// обработчик событий на кнопку сортировки 
 
 function clickButtonToDo(event){
     event.preventDefault();
@@ -38,10 +33,11 @@ function addTask(name) { // функция отвечает за добавле�
     buttonDelet.innerText = 'X';
     toDoList.append(newElementDiv);
     newElementDiv.append(buttonDelet);
-    buttonDelet.addEventListener('click', clickButtonDelet);
+    // arrayToDo.push(newElementDiv); пока не трогать!!!
+    buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления 
 
+    // код drag and drop 
     let taskElements = toDoList.querySelectorAll('.list__content');
-     
     // Перебираем все элементы списка и присваиваем нужное значение
     for (let task of taskElements) {
       task.draggable = true;
@@ -97,37 +93,63 @@ function addTask(name) { // функция отвечает за добавле�
       
         return nextElement;
       };
-    };
+      //drag and drop закончен
+};
 
 function clickButtonSort() { //функция отвечает за запуск функции сортировки элементов при нажатии на кнопку buttonSort
     if(toDoList.style.display == 'block') { // проверка на пустую строку
         buttonSort.classList == 'button__sort__To__Do__list'? sortList():sortListReverse();
     } else {
-         return ;
+        return;
     };
 };
 
 function sortList() { // сортировка от а до я и a до z
-let sortInfo = document.querySelectorAll('.list__content');
-let newSortArr = arrayToDo.sort();
-for(var i = 0; i < sortInfo.length; i++) {
-    sortInfo[i].innerHTML = newSortArr[i] + " ";
-  }
-  buttonSort.classList = 'button__sort__To__Do__list__two'
+    event.preventDefault();
+    let sortInfo = document.querySelectorAll('.list__content');
+    let newSortArr = arrayToDo.sort();
+    // for(let f = 0; f < arrayToDo.length; f++) { попробовать еще раз отсортировать по стоке из div!!!!!
+    //    let mas = arrayToDo.innerText.sort()
+
+    //     console.log(mas[f].innerText)
+    // }
+    for(let i = 0; i < sortInfo.length; i++) {
+        // for(let f = 0; f < arrayToDo.length; f++) {
+            // console.log(arrayToDo[f].firstChild) 
+            sortInfo[i].innerHTML = newSortArr[i] + " ";
+            let buttonDelet = document.createElement('button');
+            buttonDelet.innerText = 'X';
+            let buttonDeletClass = buttonDelet.classList;
+            buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
+            sortInfo[i].append(buttonDelet);
+        }
+        // sortInfo[i].innerHTML = newSortArr[i] + " ";
+        // let buttonDelet = document.createElement('button');
+        // buttonDelet.innerText = 'X';
+        // let buttonDeletClass = buttonDelet.classList;
+        // buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
+        // sortInfo[i].append(buttonDelet);
+    // }
+    buttonSort.classList = 'button__sort__To__Do__list__two'
 };
 
 function sortListReverse () { //сортировка от я до а от z до a
-let sortInfo = document.querySelectorAll('.list__content');
-let newSortArr = arrayToDo.sort();
-let newSortArrReverse = newSortArr.reverse();
-for(var i = 0; i < sortInfo.length; i++) {
-    sortInfo[i].innerHTML = newSortArrReverse[i] + " ";
-  }
-  buttonSort.classList = 'button__sort__To__Do__list';
+    event.preventDefault();
+    let sortInfo = document.querySelectorAll('.list__content');
+    let newSortArr = arrayToDo.sort();
+    let newSortArrReverse = newSortArr.reverse();
+    for(var i = 0; i < sortInfo.length; i++) {
+        sortInfo[i].innerHTML = newSortArrReverse[i] + " ";
+        let buttonDelet = document.createElement('button');
+        buttonDelet.innerText = 'X';
+        let buttonDeletClass = buttonDelet.classList;
+        buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
+        sortInfo[i].append(buttonDelet);
+    }
+    buttonSort.classList = 'button__sort__To__Do__list';
 };
 
-function clickButtonDelet(event) { 
-    event.preventDefault();
+function clickButtonDelet() { 
     let elementDiv = document.querySelector('.list__content');
     elementDiv.remove();
     console.log("удалил");
