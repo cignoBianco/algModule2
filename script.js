@@ -1,37 +1,35 @@
 let buttonToDo = document.querySelector('.button__To__Do__list');
 let inputToDo = document.querySelector('.input__To__Do__list');
-let buttonSort = document.querySelector('.button__sort__To__Do__list');v 
+let buttonSort = document.querySelector('.button__sort__To__Do__list'); 
 let formList = document.querySelector('.form__To__Do__list');
 let toDoList = document.querySelector('.list');
 
 let arrayToDo = []; //массив листа
 
-
 buttonToDo.addEventListener('click', (event) => clickButtonToDo(event));
 buttonSort.addEventListener('click', clickButtonSort);
 window.addEventListener ("keypress", function (e) {
-    if (e.key !== 13) return;
-
-    return console.log("enter!");
+    if (e.key !== 13)  return;
+    clickButtonToDo(e);
+    console.log("enter!");
 });
-
 
 function clickButtonToDo(event){
     event.preventDefault();
-    // if(document.querySelector('.input__To__Do__list').value == '') { // проверка на пустую строку
-    //     return ;
-    // } else {
+    if(document.querySelector('.input__To__Do__list').value == '') { // проверка на пустую строку
+        event.preventDefault(); return ;
+    } else {
         toDoList.style.display = 'block';
     arrayToDo.push(inputToDo.value); //добавляет значение инпута в массив
-    console.log(inputToDo.value,document.querySelector('.input__To__Do__list').value)
     addTask(inputToDo.value);
     document.querySelector('.input__To__Do__list').value = ''; // чистит инпут для новой задачи
-    // };
+    };
 };
 
 function addTask(name) { // функция отвечает за добавление и стилизацию блока с поставленной задачей в блок .list
     let newElementDiv = document.createElement('div');
     let buttonDelet = document.createElement('button');
+    buttonDelet.type = 'button';
     let buttonDeletClass = buttonDelet.classList;
     let newElementDivClass = newElementDiv.classList;
     newElementDivClass.add('list__content');//добавил стилизацию для блока с задачей
@@ -40,7 +38,6 @@ function addTask(name) { // функция отвечает за добавле�
     buttonDelet.innerText = 'X';
     toDoList.append(newElementDiv);
     newElementDiv.append(buttonDelet);
-    // arrayToDo.push(newElementDiv); пока не трогать!!!
     buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления 
 
     // код drag and drop 
@@ -115,28 +112,17 @@ function sortList() { // сортировка от а до я и a до z
     event.preventDefault();
     let sortInfo = document.querySelectorAll('.list__content');
     let newSortArr = arrayToDo.sort();
-    // for(let f = 0; f < arrayToDo.length; f++) { попробовать еще раз отсортировать по стоке из div!!!!!
-    //    let mas = arrayToDo.innerText.sort()
-
-    //     console.log(mas[f].innerText)
-    // }
     for(let i = 0; i < sortInfo.length; i++) {
-        // for(let f = 0; f < arrayToDo.length; f++) {
-            // console.log(arrayToDo[f].firstChild) 
+            sortInfo[i].innerHTML = '';
             sortInfo[i].innerHTML = newSortArr[i] + " ";
             let buttonDelet = document.createElement('button');
+            buttonDelet.type = 'button';
             buttonDelet.innerText = 'X';
             let buttonDeletClass = buttonDelet.classList;
             buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
             sortInfo[i].append(buttonDelet);
+            buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления 
         }
-        // sortInfo[i].innerHTML = newSortArr[i] + " ";
-        // let buttonDelet = document.createElement('button');
-        // buttonDelet.innerText = 'X';
-        // let buttonDeletClass = buttonDelet.classList;
-        // buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
-        // sortInfo[i].append(buttonDelet);
-    // }
     buttonSort.classList = 'button__sort__To__Do__list__two'
 };
 
@@ -146,19 +132,39 @@ function sortListReverse () { //сортировка от я до а от z до
     let newSortArr = arrayToDo.sort();
     let newSortArrReverse = newSortArr.reverse();
     for(var i = 0; i < sortInfo.length; i++) {
+        sortInfo[i].innerHTML = '';
         sortInfo[i].innerHTML = newSortArrReverse[i] + " ";
         let buttonDelet = document.createElement('button');
+        buttonDelet.type = 'button';
         buttonDelet.innerText = 'X';
         let buttonDeletClass = buttonDelet.classList;
         buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
         sortInfo[i].append(buttonDelet);
+        buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления
     }
     buttonSort.classList = 'button__sort__To__Do__list';
 };
 
-function clickButtonDelet() { 
-    let elementDiv = document.querySelector('.list__content');
-    elementDiv.remove();
-    console.log("удалил");
+function clickButtonDelet() {
+    // let elementDiv = document.querySelector('.list__content');
+    let elementDiv = this.closest('.list__content');
+    console.log(elementDiv)
+    let str = elementDiv.innerText;
+    str = str.split('X').join('');
+    // let res = `${str}`;
+    // console.log(str);
+    let elementRemove = arrayToDo.indexOf(`${str}`);
+    console.log(elementRemove);
+     arrayToDo.splice(elementRemove, 1);
+     elementDiv.remove();
+    console.log(arrayToDo);
     toDoList.innerText == ''? toDoList.style.display = 'none':toDoList.style.display = 'block';
 };
+
+
+// sortInfo[i].innerHTML = newSortArr[i] + " ";
+        // let buttonDelet = document.createElement('button');
+        // buttonDelet.innerText = 'X';
+        // let buttonDeletClass = buttonDelet.classList;
+        // buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
+        // sortInfo[i].append(buttonDelet);

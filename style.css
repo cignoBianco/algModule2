@@ -14,12 +14,13 @@ body {
     width: 336px;
     margin: auto;
     background: white;
+    border-radius: 9px;
+    overflow: hidden;
 }
 .wrapper .content .polosa__To__Do__list {
     background: #FFDC40;
     width: 100%;
     height: 28px;
-    border-radius: 9px;
 }
 .wrapper .content .container__To__Do__list .title__To__Do__list {
     font-style: normal;
