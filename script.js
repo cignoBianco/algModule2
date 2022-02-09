@@ -111,10 +111,18 @@ function clickButtonSort() { //функция отвечает за запуск
 function sortList() { // сортировка от а до я и a до z
     event.preventDefault();
     let sortInfo = document.querySelectorAll('.list__content');
-    let newSortArr = arrayToDo.sort();
+    arrayToDo.sort((a, b) => {
+        if (a < b) {
+            return -1;
+        };
+        if (a > b) {
+            return 1;
+        };
+        return 0;
+    });
     for(let i = 0; i < sortInfo.length; i++) {
             sortInfo[i].innerHTML = '';
-            sortInfo[i].innerHTML = newSortArr[i] + " ";
+            sortInfo[i].innerHTML = arrayToDo[i]; //newSortArr[i] + " ";
             let buttonDelet = document.createElement('button');
             buttonDelet.type = 'button';
             buttonDelet.innerText = 'X';
@@ -129,11 +137,18 @@ function sortList() { // сортировка от а до я и a до z
 function sortListReverse () { //сортировка от я до а от z до a
     event.preventDefault();
     let sortInfo = document.querySelectorAll('.list__content');
-    let newSortArr = arrayToDo.sort();
-    let newSortArrReverse = newSortArr.reverse();
+    arrayToDo.sort((a, b) => {
+        if (a < b) {
+            return 1;
+        };
+        if (a > b) {
+            return -1;
+        };
+        return 0;
+    });
     for(var i = 0; i < sortInfo.length; i++) {
         sortInfo[i].innerHTML = '';
-        sortInfo[i].innerHTML = newSortArrReverse[i] + " ";
+        sortInfo[i].innerHTML = arrayToDo[i];
         let buttonDelet = document.createElement('button');
         buttonDelet.type = 'button';
         buttonDelet.innerText = 'X';
@@ -141,30 +156,20 @@ function sortListReverse () { //сортировка от я до а от z до
         buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
         sortInfo[i].append(buttonDelet);
         buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления
-    }
+    };
     buttonSort.classList = 'button__sort__To__Do__list';
 };
 
 function clickButtonDelet() {
     // let elementDiv = document.querySelector('.list__content');
     let elementDiv = this.closest('.list__content');
-    console.log(elementDiv)
+    elementDiv.remove();
     let str = elementDiv.innerText;
     str = str.split('X').join('');
-    // let res = `${str}`;
-    // console.log(str);
-    let elementRemove = arrayToDo.indexOf(`${str}`);
+    console.log(str);
+    let elementRemove = arrayToDo.indexOf(str);
     console.log(elementRemove);
-     arrayToDo.splice(elementRemove, 1);
-     elementDiv.remove();
+    arrayToDo.splice(elementRemove, 1);
     console.log(arrayToDo);
     toDoList.innerText == ''? toDoList.style.display = 'none':toDoList.style.display = 'block';
 };
-
-
-// sortInfo[i].innerHTML = newSortArr[i] + " ";
-        // let buttonDelet = document.createElement('button');
-        // buttonDelet.innerText = 'X';
-        // let buttonDeletClass = buttonDelet.classList;
-        // buttonDeletClass.add('del__button');//добавил стиль для кнопки удаления
-        // sortInfo[i].append(buttonDelet);
