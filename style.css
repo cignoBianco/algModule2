@@ -5,7 +5,8 @@ body {
 }
 
 .wrapper {
-    font-family: "Roboto", sans-serif; 	
+    font-family: "Roboto", sans-serif; 
+    margin-top: 200px;
 }
 
 .wrapper .content {
@@ -153,4 +154,11 @@ padding-left: 280px;
 /* ниже класс для drag and drop */
 .selected {
     opacity: 0.6;
+  }
+
+
+  @media screen and (max-width: 991px) {
+      .wrapper {
+          margin-top: 0;
+      }
   }

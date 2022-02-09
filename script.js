@@ -6,6 +6,25 @@ let toDoList = document.querySelector('.list');
 
 let arrayToDo = []; //массив листа
 
+// тут локальное хранилище 
+let todos;
+function toLocal() {
+    // event.preventDefault(); 
+    todos = toDoList.innerHTML;
+    localStorage.setItem('todos', todos);
+    localStorage.setItem('massiv', JSON.stringify(arrayToDo));
+}
+
+if(localStorage.getItem('todos')) {
+    toDoList.innerHTML = localStorage.getItem('todos');
+    let resmas = localStorage.getItem('massiv'); 
+    let newMass = JSON.parse(resmas);
+    arrayToDo = newMass;
+    toDoList.style.display = 'block'; 
+    toDoList.innerText == ''? toDoList.style.display = 'none':toDoList.style.display = 'block';
+ }
+// локальное хранилище закончено
+
 buttonToDo.addEventListener('click', (event) => clickButtonToDo(event));
 buttonSort.addEventListener('click', clickButtonSort);
 window.addEventListener ("keypress", function (e) {
@@ -24,6 +43,7 @@ function clickButtonToDo(event){
     addTask(inputToDo.value);
     document.querySelector('.input__To__Do__list').value = ''; // чистит инпут для новой задачи
     };
+    toLocal();
 };
 
 function addTask(name) { // функция отвечает за добавление и стилизацию блока с поставленной задачей в блок .list
@@ -38,8 +58,8 @@ function addTask(name) { // функция отвечает за добавле�
     buttonDelet.innerText = 'X';
     toDoList.append(newElementDiv);
     newElementDiv.append(buttonDelet);
-    buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления 
-
+    buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления
+    
     // код drag and drop 
     let taskElements = toDoList.querySelectorAll('.list__content');
     // Перебираем все элементы списка и присваиваем нужное значение
@@ -49,10 +69,12 @@ function addTask(name) { // функция отвечает за добавле�
 
     toDoList.addEventListener(`dragstart`, (evt) => {
         evt.target.classList.add(`selected`);
+        toLocal()
       })
       
       toDoList.addEventListener(`dragend`, (evt) => {
         evt.target.classList.remove(`selected`);
+        toLocal()
       });
 
       toDoList.addEventListener(`dragover`, (evt) => {
@@ -61,7 +83,7 @@ function addTask(name) { // функция отвечает за добавле�
         
         // Находим перемещаемый элемент
         const activeElement = toDoList.querySelector(`.selected`);
-        // Находим элемент, над которым в данный момент находится курсор
+        // Находим элемент, над которым в данный момент находится курсор 
         const currentElement = evt.target;
         // Проверяем, что событие сработало:
         // 1. не на том элементе, который мы перемещаем,
@@ -71,7 +93,9 @@ function addTask(name) { // функция отвечает за добавле�
       
         // Если нет, прерываем выполнение функции
         if (!isMoveable) {
+            toLocal()
           return;
+          
         }
       
         // Находим элемент, перед которым будем вставлять
@@ -81,6 +105,7 @@ function addTask(name) { // функция отвечает за добавле�
       
         // Вставляем activeElement перед nextElement
         toDoList.insertBefore(activeElement, nextElement);
+        toLocal()
       });
 
       const getNextElement = (cursorPosition, currentElement) => {
@@ -94,16 +119,19 @@ function addTask(name) { // функция отвечает за добавле�
         const nextElement = (cursorPosition < currentElementCenter) ?
             currentElement :
             currentElement.nextElementSibling;
-      
+            toLocal();
         return nextElement;
       };
+      toLocal();
       //drag and drop закончен
 };
 
 function clickButtonSort() { //функция отвечает за запуск функции сортировки элементов при нажатии на кнопку buttonSort
     if(toDoList.style.display == 'block') { // проверка на пустую строку
         buttonSort.classList == 'button__sort__To__Do__list'? sortList():sortListReverse();
+        toLocal();
     } else {
+        toLocal();
         return;
     };
 };
@@ -120,6 +148,7 @@ function sortList() { // сортировка от а до я и a до z
         };
         return 0;
     });
+
     for(let i = 0; i < sortInfo.length; i++) {
             sortInfo[i].innerHTML = '';
             sortInfo[i].innerHTML = arrayToDo[i]; //newSortArr[i] + " ";
@@ -146,6 +175,7 @@ function sortListReverse () { //сортировка от я до а от z до
         };
         return 0;
     });
+
     for(var i = 0; i < sortInfo.length; i++) {
         sortInfo[i].innerHTML = '';
         sortInfo[i].innerHTML = arrayToDo[i];
@@ -158,6 +188,7 @@ function sortListReverse () { //сортировка от я до а от z до
         buttonDelet.addEventListener('click', clickButtonDelet); // обработчик клика по кнопке удаления
     };
     buttonSort.classList = 'button__sort__To__Do__list';
+    toLocal();
 };
 
 function clickButtonDelet() {
@@ -172,4 +203,5 @@ function clickButtonDelet() {
     arrayToDo.splice(elementRemove, 1);
     console.log(arrayToDo);
     toDoList.innerText == ''? toDoList.style.display = 'none':toDoList.style.display = 'block';
+    toLocal();
 };
