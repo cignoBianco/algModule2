@@ -17,6 +17,9 @@ function toLocal() {
 
 if(localStorage.getItem('todos')) {
     toDoList.innerHTML = localStorage.getItem('todos');
+    toDoList.querySelectorAll('.del__button').forEach((delBtn) => {
+	    delBtn.addEventListener('click', clickButtonDelet);
+    });
     let resmas = localStorage.getItem('massiv'); 
     let newMass = JSON.parse(resmas);
     arrayToDo = newMass;
